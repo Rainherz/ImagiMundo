@@ -3,17 +3,23 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "prisma generate & next dev",
+    "predev": "prisma migrate dev --name update",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"
   },
   "dependencies": {
+    "@prisma/adapter-libsql": "^6.18.0",
+    "@prisma/client": "^6.18.0",
+    "@trpc/client": "^11.7.0",
+    "@trpc/next": "^11.7.0",
+    "@trpc/server": "^11.7.0",
     "next": "16.0.0",
+    "next-auth": "^4.24.11",
     "react": "19.2.0",
     "react-dom": "19.2.0",
-    "react-router": "^7.9.4",
-    "react-router-dom": "^7.9.4"
+    "zod": "^4.1.12"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
@@ -22,6 +28,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.0.0",
+    "prisma": "^6.18.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
