@@ -1,0 +1,1 @@
+type ActorRepositoryAction = RepositoryAction<ActorType,ActorRepositoryFilters>

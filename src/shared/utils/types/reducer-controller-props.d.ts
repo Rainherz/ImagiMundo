@@ -1,0 +1,1 @@
+type ReducerControllerProps <STATE, ACTION> = [STATE, ActionDispatch<[action: ACTION]>]

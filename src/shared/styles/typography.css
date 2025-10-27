@@ -1,0 +1,18 @@
+h1 {
+    @apply text-[16rem] text-center;
+}
+
+h1 + span {
+    @apply text-[4rem] text-center;
+}
+
+h3 {
+    @apply text-2xl font-bold;
+}
+h3 + span {
+    @apply text-sm;
+}
+
+h4 {
+    @apply text-lg font-bold;
+}
