@@ -11,22 +11,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Template{
-  id String @id @default(uuid())
-  titulo String
-  synopsis String
-  imagen String
-  size Int
-  scene_size Int  
-}
-
-model Actor{
-  id String @id @default(uuid())
-  name String
-  description String?
-}
-
-// Next Auith Prisma Adapter
+// # NEXT AUTH ADAPTER PRISMA
 
 model Account {
   id                 Int       @id @default(autoincrement())
@@ -67,7 +52,8 @@ model User {
   image         String?
   createdAt     DateTime  @default(now()) @map(name: "created_at")
   updatedAt     DateTime  @default(now()) @map(name: "updated_at")
-
+  // Verifica existencia de roles y busca
+  rolesMapper   Int       @default(0)
   @@map(name: "users")
 }
 
@@ -81,3 +67,66 @@ model VerificationRequest {
 
   @@map(name: "verification_requests")
 }
+
+// # ROLES
+
+// ## rolerMapper bit-1
+model Superadmin {
+  id         Int      @id @default(autoincrement())
+  userId     Int      @map(name: "user_id")
+  createdAt  DateTime @default(now()) @map(name: "created_at")
+  updatedAt  DateTime @default(now()) @map(name: "updated_at")
+  // # Por el momento un superadmin tiene todos los permisos, en un futuro configurar permisos
+}
+
+// ## rolerMapper bit-2
+model Student {
+  id         Int      @id @default(autoincrement())
+  userId     Int      @map(name: "user_id")
+  createdAt  DateTime @default(now()) @map(name: "created_at")
+  updatedAt  DateTime @default(now()) @map(name: "updated_at")
+}
+
+// # Core Objects
+
+model Story {
+  id String @id @default(uuid())
+  titulo String
+  synopsis String
+  image String
+  size Int
+  sceneSize Int  
+
+  actors ActorsOnStories[]
+}
+
+// Una historia tiene opciones y escenas, pero no se guardan en DB,
+
+model Actor {
+  id String @id @default(uuid())
+  name String
+  description String?
+
+  stories ActorsOnStories[]
+}
+
+model ActorsOnStories {
+  actor       Actor     @relation(fields: [actorId], references: [id])
+  actorId     String  
+  story       Story     @relation(fields: [storyId], references: [id])
+  storyId     String 
+  assignedAt  DateTime  @default(now())
+
+  @@id([actorId, storyId])
+}
+
+model Terminology {
+  id String @id @default(uuid())
+  term String
+  description String
+  example String
+
+  // No es requerido mostrar en UI
+  createdBy String
+}
+
