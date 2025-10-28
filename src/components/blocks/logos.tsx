@@ -16,10 +16,10 @@ type Company = {
 const topRowCompanies: Company[] = [
   {
     name: "Biblioteca Nacional",
-    logo: "/logos/biblioteca.svg",
+    logo: "/logos/logo-bnp.png",
     width: 160,
     height: 32,
-    href: "https://bibliotecanacional.example",
+    href: "",
   },
   {
     name: "Museo Regional",
@@ -30,7 +30,7 @@ const topRowCompanies: Company[] = [
   },
   {
     name: "Escuelas Públicas",
-    logo: "/logos/escuela.svg",
+    logo: "/logos/ie.png",
     width: 140,
     height: 28,
     href: "https://escuelas.example",
@@ -61,21 +61,21 @@ const bottomRowCompanies: Company[] = [
   },
   {
     name: "Red de Bibliotecas",
-    logo: "/logos/red-bibliotecas.svg",
+    logo: "/logos/mvll-b.png",
     width: 150,
     height: 30,
     href: "https://redbibliotecas.example",
   },
   {
     name: "Festival del Cuento",
-    logo: "/logos/festival-cuento.svg",
+    logo: "/logos/concurso.png",
     width: 160,
     height: 34,
     href: "https://festivalcuento.example",
   },
   {
     name: "Universidad Local",
-    logo: "/logos/universidad.svg",
+    logo: "/logos/unsa-logo.png",
     width: 140,
     height: 30,
     href: "https://universidad.example",
