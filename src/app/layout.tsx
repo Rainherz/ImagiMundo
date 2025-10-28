@@ -3,6 +3,8 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navbar } from "@/components/blocks/navbar";
 import { Footer } from "@/components/blocks/footer";
+import Providers from "@/components/Providers";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "ImagiMundo",
@@ -24,7 +26,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Navbar />
-          {children}
+
+          <Providers>{children}</Providers>
+          <Toaster richColors expand />
         </ThemeProvider>
       </body>
     </html>
