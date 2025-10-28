@@ -1,6 +1,6 @@
-import {z} from 'zod'
+import { z } from 'zod'
 
-const TemplateModel = z.object({
+const StoryModel = z.object({
     id: z.uuid(),
     title: z.string().min(1).max(100),
     synopsis: z.string().min(1).max(500),
@@ -9,4 +9,4 @@ const TemplateModel = z.object({
     scene_size: z.number().min(50).max(200),
 }) 
 
-export default TemplateModel
+export default StoryModel
