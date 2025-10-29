@@ -2,7 +2,7 @@
 
 import { SessionProvider } from "next-auth/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { createTRPCClient, httpBatchLink } from "@trpc/client";
 import { getBaseUrl } from "@/core/utils/utils";
 import { AppRouter } from "@/packages/trpc/app";
@@ -47,15 +47,17 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     })
   );
   return (
-    <SessionProvider>
-      <QueryClientProvider client={queryClient}>
-        <TRPCProvider trpcClient={trpcClient} queryClient={queryClient}>
-          <ClientLoadingProvider>
-            <LoadingOverlayWrapper />
-            {children}
-          </ClientLoadingProvider>
-        </TRPCProvider>
-      </QueryClientProvider>
-    </SessionProvider>
+    <Suspense>
+      <SessionProvider>
+        <QueryClientProvider client={queryClient}>
+          <TRPCProvider trpcClient={trpcClient} queryClient={queryClient}>
+            <ClientLoadingProvider>
+              <LoadingOverlayWrapper />
+              {children}
+            </ClientLoadingProvider>
+          </TRPCProvider>
+        </QueryClientProvider>
+      </SessionProvider>
+    </Suspense>
   );
 }

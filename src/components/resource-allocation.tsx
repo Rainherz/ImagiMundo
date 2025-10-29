@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import { DashedLine } from "../dashed-line";
+import { DashedLine } from "./dashed-line";
 
 import { cn } from "@/lib/utils";
 

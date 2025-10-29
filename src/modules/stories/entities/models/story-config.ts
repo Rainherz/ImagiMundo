@@ -6,13 +6,13 @@ import TopicModel from '../../../topics/entities/topic'
 
 const StoryConfigModel = z.object({
     id: z.uuid(),
-    title: z.string().min(1).max(100),
+    titulo: z.string().min(1).max(100),
     synopsis: z.string().min(1).max(500),
-    imagen: z.string().url().optional(),
+    image: z.url(),
     size: z.number().min(3).max(10),
-    scene_size: z.number().min(50).max(200),
-    actors: z.array(ActorModel),
-    topics: z.array(TopicModel),
+    sceneSize: z.number().min(50).max(200),
+    actors: z.array(ActorModel).optional(),
+    topics: z.array(TopicModel).optional(),
 }) 
 
 export default StoryConfigModel

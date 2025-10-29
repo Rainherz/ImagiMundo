@@ -1,4 +1,4 @@
-import StoriesServerRouter from "@/modules/stories/features/router/server";
+import StoriesServerRouter from "@/modules/stories/features/procedures/server";
 import { router } from "@/packages/trpc";
  
 const appRouter = router({

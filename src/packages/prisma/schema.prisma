@@ -99,7 +99,7 @@ model Story {
 
   actors ActorsOnStories[]
 
-  topics TopicsOnStories[]
+  topics Topic[]
 }
 
 // Una historia tiene opciones y escenas, pero no se guardan en DB,
@@ -109,17 +109,7 @@ model Topic {
   label String
   description String
 
-  stories TopicsOnStories[]
-}
-
-model TopicsOnStories {
-  topic       Topic     @relation(fields: [topicId], references: [id])
-  topicId     String  
-  story       Story     @relation(fields: [storyId], references: [id])
-  storyId     String 
-  assignedAt  DateTime  @default(now())
-
-  @@id([topicId, storyId])
+  stories Story[]
 }
 
 model Actor {
