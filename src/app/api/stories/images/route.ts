@@ -1,6 +1,10 @@
 import { generateSceneImage } from '@/modules/stories/features/image-generation/api';
 import { ImageGenerationInputSchema } from '@/modules/stories/entities/models/imageGeneration';
 
+/**
+ * @deprecated Usar TRPC: trpc.stories.images.generate.mutate()
+ * Este endpoint es un wrapper para compatibilidad hacia atrás
+ */
 export async function POST(req: Request) {
   try {
     const body = await req.json();

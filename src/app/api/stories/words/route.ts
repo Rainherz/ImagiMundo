@@ -1,6 +1,10 @@
 import { defineWord } from '@/modules/stories/features/word-definition/api';
 import { WordDefinitionInputSchema } from '@/modules/stories/entities/models/wordDefinition';
 
+/**
+ * @deprecated Usar TRPC: trpc.stories.words.define.mutate()
+ * Este endpoint es un wrapper para compatibilidad hacia atrás
+ */
 export async function POST(req: Request) {
   try {
     const body = await req.json();

@@ -239,3 +239,158 @@ POST http://localhost:3000/api/stories/chat/continue
 **Timeout:**
 - Reduce `sceneCount` o `wordsPerScene`
 - Verifica tu conexión
+
+# 🎭 Testing - Generación de Personajes
+
+## Endpoints
+
+```
+POST /api/actors/generate   # Generar personaje con IA
+POST /api/actors/save       # Guardar personaje en BD
+GET  /api/actors/list       # Listar personajes guardados
+```
+
+---
+
+## Test 1: Generar Personaje
+
+**URL:**
+```
+POST http://localhost:3000/api/actors/generate
+```
+
+**Body:**
+```json
+{
+  "name": "Don Carlos",
+  "description": "Un vendedor de frutas exóticas en el mercado que conoce historias antiguas",
+  "locality": "Medellín, Colombia"
+}
+```
+
+**Respuesta (200 OK):**
+```json
+{
+  "success": true,
+  "data": {
+    "name": "Don Carlos",
+    "description": "Un vendedor de frutas exóticas en el mercado que conoce historias antiguas...",
+    "personality": "Amable, sabio, paciente, con sentido del humor",
+    "role": "Mentor y guía",
+    "culturalBackground": "Descendiente de comerciantes paisa, conocedor de tradiciones colombianas",
+    "specialTraits": [
+      "Conoce historias de la región",
+      "Habla con acento paisa auténtico",
+      "Tiene conexiones en el mercado"
+    ]
+  }
+}
+```
+
+---
+
+## Test 2: Guardar Personaje
+
+**URL:**
+```
+POST http://localhost:3000/api/actors/save
+```
+
+**Body:**
+```json
+{
+  "name": "Don Carlos",
+  "description": "Un vendedor de frutas exóticas en el mercado que conoce historias antiguas. Amable, sabio, paciente. Descendiente de comerciantes paisa, conocedor de tradiciones colombianas."
+}
+```
+
+**Respuesta (200 OK):**
+```json
+{
+  "success": true,
+  "data": {
+    "id": "550e8400-e29b-41d4-a716-446655440000",
+    "name": "Don Carlos",
+    "description": "Un vendedor de frutas exóticas..."
+  }
+}
+```
+
+---
+
+## Test 3: Listar Personajes
+
+**URL:**
+```
+GET http://localhost:3000/api/actors/list
+```
+
+**Respuesta (200 OK):**
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440000",
+      "name": "Don Carlos",
+      "description": "Un vendedor de frutas exóticas..."
+    },
+    {
+      "id": "660e8400-e29b-41d4-a716-446655440001",
+      "name": "Pedrito",
+      "description": "Un niño curioso de 8 años..."
+    }
+  ]
+}
+```
+
+---
+
+## Flujo Completo
+
+```
+1. POST /api/actors/generate
+   ↓ IA genera personaje detallado
+
+2. Usuario revisa el personaje generado
+   ↓
+
+3. POST /api/actors/save
+   ↓ Guarda en BD
+
+4. GET /api/actors/list
+   ↓ Obtiene lista de personajes
+
+5. Usar personajes en POST /api/stories/chat/init
+   ↓ Agregar al contexto de la historia
+```
+
+---
+
+## Usar Personajes en Historias
+
+Después de generar y guardar personajes, puedes usarlos en historias:
+
+**POST /api/stories/chat/init**
+```json
+{
+  "storyTitle": "El Viaje de Pedrito",
+  "storyDescription": "Un niño descubre un misterio",
+  "userLocality": "Medellín, Colombia",
+  "actors": ["Don Carlos", "Pedrito"],
+  "sceneCount": 3,
+  "wordsPerScene": 120
+}
+```
+
+Los personajes se incluirán en el contexto de la historia.
+
+---
+
+## ✅ Características
+
+- ✅ Generación de personajes con IA
+- ✅ Personalidad y trasfondo cultural
+- ✅ Guardado en BD
+- ✅ Listado de personajes
+- ✅ Integración con historias

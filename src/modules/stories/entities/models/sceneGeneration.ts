@@ -37,8 +37,24 @@ export const StoryContinueResponseSchema = z.object({
   scene: SceneOutputSchema,
 })
 
+// Generación de múltiples escenas (no interactivo)
+export const SceneGenerationInputSchema = z.object({
+  storyTitle: z.string().min(1, 'El título es requerido'),
+  storyDescription: z.string().min(1, 'La descripción es requerida'),
+  userLocality: z.string().min(1, 'La localidad es requerida'),
+  actors: z.array(z.string()).optional(),
+  sceneCount: z.number().int().min(1).max(20),
+  wordsPerScene: z.number().int().min(50).max(500),
+})
+
+export const ScenesOutputSchema = z.object({
+  scenes: z.array(SceneOutputSchema),
+})
+
 export type StoryInitInput = z.infer<typeof StoryInitInputSchema>
 export type StoryContinueInput = z.infer<typeof StoryContinueInputSchema>
 export type SceneOutput = z.infer<typeof SceneOutputSchema>
 export type StoryInitResponse = z.infer<typeof StoryInitResponseSchema>
 export type StoryContinueResponse = z.infer<typeof StoryContinueResponseSchema>
+export type SceneGenerationInput = z.infer<typeof SceneGenerationInputSchema>
+export type ScenesOutput = z.infer<typeof ScenesOutputSchema>

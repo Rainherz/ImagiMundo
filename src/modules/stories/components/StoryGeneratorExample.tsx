@@ -95,9 +95,9 @@ export function StoryGeneratorExample() {
               {/* Mostrar imagen generada */}
               {imageData && (
                 <div className="mt-3 p-3 bg-blue-50 rounded text-sm">
-                  {imageData.imageUrl && (
+                  {imageData.base64 && (
                     <img 
-                      src={imageData.imageUrl} 
+                      src={`data:${imageData.mimeType};base64,${imageData.base64}`} 
                       alt={`Escena ${scene.scene_number}`}
                       className="w-full rounded mb-2 max-h-64 object-cover"
                     />

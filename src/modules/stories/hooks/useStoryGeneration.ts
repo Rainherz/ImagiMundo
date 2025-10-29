@@ -18,7 +18,7 @@ export const useStoryGeneration = () => {
   );
 
   const generateImageMutation = useMutation(
-    trpc.stories.images.generateSceneImage.mutationOptions()
+    trpc.stories.images.generate.mutationOptions()
   );
 
   return {

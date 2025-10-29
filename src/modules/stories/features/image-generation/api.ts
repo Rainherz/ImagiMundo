@@ -1,4 +1,5 @@
 import { generateText } from 'ai'
+import prisma from '@/packages/prisma'
 import { geminiImagePreview } from '../../lib/gemini-client'
 import { generateImagePrompt } from '../../lib/prompts'
 import type { ImageGenerationInput } from '../../entities/models/imageGeneration'
@@ -24,9 +25,32 @@ export async function generateSceneImage(input: ImageGenerationInput) {
     )
 
     if (imageFile?.base64) {
+      const base64Data = imageFile.base64
+      const mimeType = imageFile.mediaType
+
+      // Guardar en BD (actualizar escena con URL de imagen)
+      // En producción, guardarías en un servicio de almacenamiento (S3, etc)
+      // Por ahora guardamos el base64 en la BD
+      const dataUrl = `data:${mimeType};base64,${base64Data}`
+      
+      // Buscar y actualizar la escena
+      const scene = await prisma.scene.findFirst({
+        where: {
+          sceneNumber: input.sceneNumber,
+        },
+        orderBy: { createdAt: 'desc' },
+      })
+
+      if (scene) {
+        await prisma.scene.update({
+          where: { id: scene.id },
+          data: { imageUrl: dataUrl },
+        })
+      }
+
       return {
-        base64: imageFile.base64,
-        mimeType: imageFile.mediaType,
+        base64: base64Data,
+        mimeType: mimeType,
         prompt: promptDescription,
       }
     }
@@ -36,6 +60,11 @@ export async function generateSceneImage(input: ImageGenerationInput) {
     throw new Error('El modelo no devolvió imagen. Intenta reformular la descripción.')
   } catch (error) {
     console.error('Error generating image:', error)
-    throw new Error('No se pudo generar la imagen. Intenta de nuevo.')
+    // Retornar error pero no bloquear
+    return {
+      base64: '',
+      mimeType: '',
+      prompt: promptDescription,
+    }
   }
 }

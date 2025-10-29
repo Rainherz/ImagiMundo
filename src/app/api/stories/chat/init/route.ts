@@ -1,6 +1,10 @@
 import { initializeStory } from '@/modules/stories/features/scene-generation/chat'
 import { StoryInitInputSchema } from '@/modules/stories/entities/models/sceneGeneration'
 
+/**
+ * @deprecated Usar TRPC: trpc.stories.chat.init.mutate()
+ * Este endpoint es un wrapper para compatibilidad hacia atrás
+ */
 export async function POST(req: Request) {
   try {
     const body = await req.json()
