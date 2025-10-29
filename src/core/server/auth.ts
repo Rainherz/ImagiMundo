@@ -9,8 +9,8 @@ export const AuthConfig : AuthOptions = {
     providers: [
         Google({
             allowDangerousEmailAccountLinking: true,
-            clientId: "",
-            clientSecret: ""
+            clientId: process.env.GOOGLE_CLIENT_SECRET ?? "",
+            clientSecret: process.env.GOOGLE_CLIENT_ID ?? "",
         }),
     ],
     callbacks: {
