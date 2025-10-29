@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import ActorModel from '@/modules/actors/entities/models/actor'
+import { ActorSchema } from '@/modules/actors/entities/models/actor'
 
 import TopicModel from '../../../topics/entities/topic'
 
@@ -11,7 +11,7 @@ const StoryConfigModel = z.object({
     image: z.url(),
     size: z.number().min(3).max(10),
     sceneSize: z.number().min(50).max(200),
-    actors: z.array(ActorModel).optional(),
+    actors: z.array(ActorSchema).optional(),
     topics: z.array(TopicModel).optional(),
 }) 
 
