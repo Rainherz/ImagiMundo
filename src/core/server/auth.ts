@@ -3,6 +3,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 
 import Google from "next-auth/providers/google";
 import prisma from "@/packages/prisma";
+import CredentialsProviderConfig from "./credentials";
 
 export const AuthConfig : AuthOptions = {
     adapter: PrismaAdapter(prisma),
@@ -12,6 +13,7 @@ export const AuthConfig : AuthOptions = {
             clientId: process.env.GOOGLE_CLIENT_ID ?? "",
             clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "",
         }),
+        CredentialsProviderConfig,
     ],
     callbacks: {
         async session({ session, user }) {

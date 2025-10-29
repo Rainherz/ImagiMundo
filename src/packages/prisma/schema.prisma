@@ -54,6 +54,9 @@ model User {
   updatedAt     DateTime  @default(now()) @map(name: "updated_at")
   // Verifica existencia de roles y busca
   rolesMapper   Int       @default(0)
+
+  // credentials
+  credentials   String?
   @@map(name: "users")
 }
 
