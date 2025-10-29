@@ -1,8 +1,8 @@
 import { z } from 'zod'
 
 const ChoiceModel = z.object({
-    key: z.string(),
-    text: z.string(),
-}) 
+  id: z.string().uuid().optional(),
+  text: z.string().min(1),
+})
 
 export default ChoiceModel

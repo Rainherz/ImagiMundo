@@ -1,20 +1,35 @@
-import prisma from "@/packages/prisma";
-import { publicProcedure } from "@/packages/trpc";
-import TemplateModel from "../../entities/story/model";
+import { router, publicProcedure } from "@/packages/trpc";
+import { generateStoryScenes } from "../scene-generation/api";
+import { defineWord } from "../word-definition/api";
+import { generateSceneImage } from "../image-generation/api";
+import { SceneGenerationInputSchema } from "../../entities/models/sceneGeneration";
+import { WordDefinitionInputSchema } from "../../entities/models/wordDefinition";
+import { ImageGenerationInputSchema } from "../../entities/models/imageGeneration";
 
+const StoriesServerRouter = router({
+  scenes: router({
+    generate: publicProcedure
+      .input(SceneGenerationInputSchema)
+      .mutation(async ({ input }) => {
+        return await generateStoryScenes(input);
+      }),
+  }),
 
-const StoriesServerRouter = {
-    listStories: publicProcedure.query(async () => {
-        const templates = await prisma.template.findMany();
-        return templates;
-    }),
-    create: publicProcedure.input(TemplateModel).mutation(async (opts) => {
-        const template = await prisma.template.create({
-            data: opts.input
-        });
+  words: router({
+    define: publicProcedure
+      .input(WordDefinitionInputSchema)
+      .mutation(async ({ input }) => {
+        return await defineWord(input);
+      }),
+  }),
 
-        return template
-    })
-}
+  images: router({
+    generateSceneImage: publicProcedure
+      .input(ImageGenerationInputSchema)
+      .mutation(async ({ input }) => {
+        return await generateSceneImage(input);
+      }),
+  }),
+});
 
 export default StoriesServerRouter;

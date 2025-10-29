@@ -98,29 +98,9 @@ model Story {
   sceneSize Int  
 
   actors ActorsOnStories[]
-
-  topics TopicsOnStories[]
 }
 
 // Una historia tiene opciones y escenas, pero no se guardan en DB,
-
-model Topic {
-  id String @id @default(uuid())
-  label String
-  description String
-
-  stories TopicsOnStories[]
-}
-
-model TopicsOnStories {
-  topic       Topic     @relation(fields: [topicId], references: [id])
-  topicId     String  
-  story       Story     @relation(fields: [storyId], references: [id])
-  storyId     String 
-  assignedAt  DateTime  @default(now())
-
-  @@id([topicId, storyId])
-}
 
 model Actor {
   id String @id @default(uuid())
@@ -148,5 +128,30 @@ model Terminology {
 
   // No es requerido mostrar en UI
   createdBy String
+}
+
+// # Story Generation Models
+
+model Scene {
+  id        String   @id @default(uuid())
+  storyId   String
+  sceneNumber Int
+  content   String
+  imageUrl  String?
+  options   String   // JSON array stored as string
+  createdAt DateTime @default(now())
+
+  @@index([storyId])
+}
+
+model WordDefinition {
+  id        String   @id @default(uuid())
+  word      String
+  definition String
+  example   String
+  context   String
+  createdAt DateTime @default(now())
+
+  @@index([word])
 }
 
