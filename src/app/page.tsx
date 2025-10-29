@@ -10,7 +10,6 @@ export default function Home() {
   return (
     <main className="absolute w-full flex items-center flex-col">
       <Navbar />
-
       <Background className="via-muted to-muted/80 px-20">
         <Hero />
         <Logos />
