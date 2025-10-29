@@ -9,15 +9,15 @@ import { DashedLine } from "../dashed-line";
 const items = [
   {
     title: "Asistente de escritura IA",
-    image: "/features/triage-card.svg",
+    image: "/features/ia-asistent.png",
   },
   {
     title: "Formatos multimedia",
-    image: "/features/cycle-card.svg",
+    image: "/features/multimedia.png",
   },
   {
     title: "Historias interactivas",
-    image: "/features/overview-card.svg",
+    image: "/features/rutas.png",
   },
 ];
 
