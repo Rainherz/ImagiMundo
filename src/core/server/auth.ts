@@ -42,4 +42,7 @@ export const AuthConfig : AuthOptions = {
             return token;
         },
     },
+    session: {
+        strategy: 'jwt'
+    }
 };
