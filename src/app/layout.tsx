@@ -3,6 +3,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import Providers from "@/components/Providers";
 import { Toaster } from "@/components/ui/sonner";
+import NextTopLoader from "nextjs-toploader";
 
 export const metadata: Metadata = {
   title: "ImagiMundo — Cuentos personalizados y multimedia",
@@ -18,35 +19,6 @@ export const metadata: Metadata = {
     "cultura local",
   ],
   authors: [{ name: "Imagi Mundo", url: "https://imagimundo.aihostu.app" }],
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#000000" },
-  ],
-  openGraph: {
-    title: "ImagiMundo — Cuentos personalizados y multimedia",
-    description:
-      "Crea cuentos de suspense con giros narrativos, audio y vídeo generados por IA, y enriquece las historias con elementos culturales locales.",
-    url: "https://imagimundo.aihostu.app/",
-    siteName: "ImagiMundo",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Imagi Mundo - Cuentos con IA",
-      },
-    ],
-    locale: "es_ES",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "ImagiMundo — Cuentos personalizados y multimedia",
-    description:
-      "Plataforma educativa para crear cuentos de suspense con IA y recursos culturales.",
-    images: ["/og-image.png"],
-    site: "@ImagiMundo",
-  },
   robots: {
     index: true,
     follow: true,
@@ -71,6 +43,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className="light" style={{ colorScheme: "light" }}>
+        <head>
+          <NextTopLoader />
+          <link rel="icon" href="/icon.png" sizes="any" />
+        </head>
       <body className="retro antialiased">
         <ThemeProvider
           attribute="class"

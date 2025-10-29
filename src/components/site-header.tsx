@@ -70,7 +70,7 @@ export function SiteHeader({ home }: { home?: boolean }) {
           <BreadcrumbItem>
             <BreadcrumbLink
               href={href}
-              className={"capitalize min-w-[40px]    truncate"}
+              className={"capitalize min-w-10    truncate"}
               style={{ maxWidth: `${maxWidth}px` }}
             >
               {decodeURIComponent(route)}
@@ -180,7 +180,12 @@ export function SiteHeader({ home }: { home?: boolean }) {
                     </DropdownMenuItem>
                   </DropdownMenuGroup>
                   <DropdownMenuItem
-                    onClick={() => void signOut()}
+                    onClick={() =>
+                      void signOut({
+                        redirect: true,
+                        callbackUrl: "/sign-in",
+                      })
+                    }
                     className="cursor-pointer"
                   >
                     <IconLogout />
