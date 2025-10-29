@@ -30,5 +30,16 @@ export const AuthConfig : AuthOptions = {
             session.user = userDB;
             return session;
         },
+        async jwt ({ token, user }) {
+            console.log("JWT Callback", { token, user });
+            if (user) {
+                const u = user as unknown as any;
+                return {
+                ...token,
+                id: u.id,
+                };
+            }
+            return token;
+        },
     },
 };
