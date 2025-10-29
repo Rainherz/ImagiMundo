@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     "historias interactivas",
     "cultura local",
   ],
-  authors: [{ name: "Imagi Mundo", url: "https://imagimundo.example" }],
+  authors: [{ name: "Imagi Mundo", url: "https://imagimundo.aihostu.app" }],
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#ffffff" },
     { media: "(prefers-color-scheme: dark)", color: "#000000" },
