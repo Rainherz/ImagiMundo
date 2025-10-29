@@ -6,21 +6,6 @@ const adapter = new PrismaLibSQL({
   authToken: `${process.env.TURSO_DATABASE_TOKEN}`,
 })
 
-const prisma = new PrismaClient({ adapter }).$extends({
-  query: {
-    $allModels: {
-      async $allOperations({ operation, model, args, query }) {
-        const result = await query(args)
-        
-        // Synchronize the embedded replica after any write operation
-        if (['create', 'update', 'delete'].includes(operation)) {
-          await libsql.sync()
-        }
-        
-        return result
-      }
-    }
-  }
-})
+const prisma = new PrismaClient({ adapter })
 
 export default prisma
