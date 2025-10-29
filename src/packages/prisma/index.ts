@@ -13,5 +13,4 @@ const adapter = new PrismaLibSQL({
 const prisma = new PrismaClient({ adapter })
 
 // const prisma = new PrismaClient()
-prisma.account.findUnique()
 export default prisma
