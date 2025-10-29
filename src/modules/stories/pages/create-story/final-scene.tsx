@@ -6,7 +6,6 @@ import {
 } from "@/components/main-layout";
 import {
   continueStory,
-  initializeStory,
 } from "../../features/scene-generation/chat";
 import { useStories } from "../../queries";
 import { toast } from "sonner";
@@ -15,27 +14,16 @@ import React from "react";
 import Image from "next/image";
 import { DashedLine } from "@/components/dashed-line";
 import { Card } from "@/components/ui/8bit/card";
-import { Button } from "@/components/ui/8bit/button";
 
-export default function Scene2Page({
+export default function FinalScene({
   data: givenParameters,
-  setToFinalScene,
 }: {
   data: Awaited<ReturnType<typeof continueStory>> & {
     storyTitle: string;
     userLocality: string;
   };
-  setToFinalScene: React.Dispatch<
-    React.SetStateAction<
-      | (Awaited<ReturnType<typeof continueStory>> & {
-          storyTitle: string;
-          userLocality: string;
-        })
-      | null
-    >
-  >;
 }) {
-  const { useGenerateImage, useContinueStory } = useStories();
+  const { useGenerateImage } = useStories();
   const [loadingImage, setLoadingImage] = React.useState(true);
   const [image, setImage] = React.useState<string | null>(null);
   const [mimeType, setMimeType] = React.useState<string | null>(null);
@@ -57,27 +45,10 @@ export default function Scene2Page({
       userLocality: givenParameters.userLocality,
     });
   }, []);
-  const mutateContinueStory = useContinueStory({
-    onError: (error) => toast.error(error.message),
-    onSuccess: (data: Awaited<ReturnType<typeof continueStory>>) => {
-      setToFinalScene({
-        ...data,
-        storyTitle: givenParameters.storyTitle,
-        userLocality: givenParameters.userLocality,
-      });
-    },
-  });
 
-  function handleSubmitOption(option: string) {
-    console.log("Opción seleccionada:", option);
-    mutateContinueStory.mutate({
-      storyId: givenParameters.storyId,
-      selectedOption: option + " (Escena 2), la siguiente escena es la final.",
-    });
-  }
   return (
     <MainLayout className="opacity-80">
-      <MainLayoutTitle>Escena 2</MainLayoutTitle>
+      <MainLayoutTitle>Escena Final</MainLayoutTitle>
       <MainLayoutSection>
         <Card className="justify-center">
           <div className="container flex flex-col items-center px-10  justify-center gap-8 md:gap-14 lg:flex-row lg:gap-20">
@@ -113,23 +84,6 @@ export default function Scene2Page({
                   <p className="text-muted-foreground w-auto text-sm">
                     {givenParameters.scene.content}
                   </p>
-                </div>
-                <div className="flex p-6 flex-col gap-4">
-                  <MainLayoutSubTitle>
-                    Opciones de continuación
-                  </MainLayoutSubTitle>
-                  <div className="flex flex-col items-center  gap-6">
-                    {givenParameters.scene.options.map((option, index) => (
-                      <Button
-                        key={index}
-                        onClick={() => handleSubmitOption(option)}
-                        disabled={mutateContinueStory.isPending}
-                        className="text-muted-foreground h-auto max-w-2/3  whitespace-normal text-sm"
-                      >
-                        {option}
-                      </Button>
-                    ))}
-                  </div>
                 </div>
               </div>
             </div>

@@ -14,18 +14,19 @@ import { generateSceneImage } from "../../features/image-generation/api";
 import React from "react";
 import Image from "next/image";
 import { DashedLine } from "@/components/dashed-line";
-import { Card } from "@/components/ui/8bit/card";
+import { Card, CardAction } from "@/components/ui/8bit/card";
 import { Button } from "@/components/ui/8bit/button";
+import WordDefinitionModal, { getWordContexts } from "./word-difinition";
 
-export default function Scene2Page({
+export default function Scene1Page({
   data: givenParameters,
-  setToFinalScene,
+  setToScene2,
 }: {
-  data: Awaited<ReturnType<typeof continueStory>> & {
+  data: Awaited<ReturnType<typeof initializeStory>> & {
     storyTitle: string;
     userLocality: string;
   };
-  setToFinalScene: React.Dispatch<
+  setToScene2: React.Dispatch<
     React.SetStateAction<
       | (Awaited<ReturnType<typeof continueStory>> & {
           storyTitle: string;
@@ -39,7 +40,6 @@ export default function Scene2Page({
   const [loadingImage, setLoadingImage] = React.useState(true);
   const [image, setImage] = React.useState<string | null>(null);
   const [mimeType, setMimeType] = React.useState<string | null>(null);
-
   const generateImage = useGenerateImage({
     onError: (error) => toast.error(error.message),
     onSuccess: (data: Awaited<ReturnType<typeof generateSceneImage>>) => {
@@ -49,21 +49,12 @@ export default function Scene2Page({
     },
   });
 
-  React.useEffect(() => {
-    generateImage.mutate({
-      sceneContent: givenParameters.scene.imagePrompt,
-      sceneNumber: givenParameters.scene.scene_number,
-      storyTitle: givenParameters.storyTitle,
-      userLocality: givenParameters.userLocality,
-    });
-  }, []);
   const mutateContinueStory = useContinueStory({
     onError: (error) => toast.error(error.message),
     onSuccess: (data: Awaited<ReturnType<typeof continueStory>>) => {
-      setToFinalScene({
-        ...data,
+      setToScene2({...data,
         storyTitle: givenParameters.storyTitle,
-        userLocality: givenParameters.userLocality,
+        userLocality: givenParameters.userLocality
       });
     },
   });
@@ -72,12 +63,21 @@ export default function Scene2Page({
     console.log("Opción seleccionada:", option);
     mutateContinueStory.mutate({
       storyId: givenParameters.storyId,
-      selectedOption: option + " (Escena 2), la siguiente escena es la final.",
+      selectedOption: option,
     });
   }
+  React.useEffect(() => {
+    generateImage.mutate({
+      sceneContent: givenParameters.scene.imagePrompt,
+      sceneNumber: givenParameters.scene.scene_number,
+      storyTitle: givenParameters.storyTitle,
+      userLocality: givenParameters.userLocality,
+    });
+  }, []);
+
   return (
     <MainLayout className="opacity-80">
-      <MainLayoutTitle>Escena 2</MainLayoutTitle>
+      <MainLayoutTitle>Escena 1</MainLayoutTitle>
       <MainLayoutSection>
         <Card className="justify-center">
           <div className="container flex flex-col items-center px-10  justify-center gap-8 md:gap-14 lg:flex-row lg:gap-20">
@@ -107,11 +107,13 @@ export default function Scene2Page({
               />
               <div className="flex flex-col gap-2.5 lg:gap-5">
                 <div className="p-6">
-                  <MainLayoutSubTitle>
-                    {givenParameters.storyTitle}
-                  </MainLayoutSubTitle>
+                  <MainLayoutSubTitle>{givenParameters.storyTitle}</MainLayoutSubTitle>
                   <p className="text-muted-foreground w-auto text-sm">
-                    {givenParameters.scene.content}
+                    {getWordContexts(givenParameters.scene.content).map(({ word, context }, index) => (
+                      <React.Fragment key={index}>
+                        <WordDefinitionModal word={word} context={context} />{" "}
+                      </React.Fragment>
+                    ))}
                   </p>
                 </div>
                 <div className="flex p-6 flex-col gap-4">

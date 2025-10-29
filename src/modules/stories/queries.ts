@@ -6,10 +6,6 @@ import { inferReactQueryProcedureOptions } from "@trpc/react-query";
 import { AppRouter } from "@/packages/trpc/app";
 import { useMutationWithRefresh } from "@/hooks/use-mutation-refresh";
 
-/**
- * Hook para usar las APIs de historias
- * @deprecated Usar directamente trpc.stories.chat.init, trpc.stories.chat.continue, etc.
- */
 export const useStories = () => {
   const trpc = useTRPC();
 

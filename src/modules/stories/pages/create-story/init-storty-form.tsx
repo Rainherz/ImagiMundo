@@ -81,8 +81,8 @@ export function CreateHistoryForm({
       storyDescription: "",
       userLocality: "",
       actors: [{ name: "" }],
-      sceneCount: "1",
-      wordsPerScene: "100",
+      sceneCount: "3",
+      wordsPerScene: "150",
     },
   });
 
@@ -117,7 +117,7 @@ export function CreateHistoryForm({
   }
 
   return (
-    <Card className="w-full sm:max-w-4xl">
+    <Card className="w-full opacity-90 sm:max-w-4xl">
       <CardHeader>
         <CardTitle>Iniciar Historia</CardTitle>
         <CardDescription>
@@ -248,7 +248,7 @@ export function CreateHistoryForm({
             >
               Agregar personaje
             </Button>
-            <Controller
+            {/* <Controller
               name="sceneCount"
               control={form.control}
               render={({ field, fieldState }) => (
@@ -293,7 +293,7 @@ export function CreateHistoryForm({
                   )}
                 </Field>
               )}
-            />
+            /> */}
           </FieldGroup>
         </form>
       </CardContent>
