@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import SceneModel from './scene'
 
 const StoryModel = z.object({
     id: z.uuid(),
@@ -6,7 +7,8 @@ const StoryModel = z.object({
     synopsis: z.string().min(1).max(500),
     imagen: z.string().url().optional(),
     size: z.number().min(3).max(10),
-    scene_size: z.number().min(50).max(200),
+    sceneSize: z.number().min(50).max(200),
+    scenes: z.array(SceneModel)
 }) 
 
 export default StoryModel

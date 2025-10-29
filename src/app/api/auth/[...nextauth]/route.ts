@@ -1,3 +1,9 @@
-import { handlers } from "@/core/server/auth";
+import { AuthConfig } from "@/core/server/auth"
+import NextAuth from "next-auth"
 
-export const { GET, POST } = handlers;
+export const handler = NextAuth(AuthConfig)
+
+export { 
+    handler as GET,
+    handler as POST,
+}
