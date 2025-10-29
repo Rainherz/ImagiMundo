@@ -49,7 +49,7 @@ export const Hero = () => {
 
           <div className="mt-8 flex flex-wrap items-center gap-10 lg:flex-nowrap">
             <Button asChild>
-              <Link href="/app">
+              <Link href="/app/new-history">
                 Empieza Ahora 
               </Link>
             </Button>
