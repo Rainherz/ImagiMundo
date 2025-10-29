@@ -5,8 +5,6 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { ChevronRight } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
@@ -25,13 +23,12 @@ const ITEMS = [
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const pathname = usePathname();
 
   return (
     <section
       className={cn(
-        "bg-background/70 backdrop-blur-md z-50 transition-all duration-300"
+        "bg-background/70 backdrop-blur-md z-50 w-full transition-all duration-300"
       )}
     >
       <div className="flex items-center text-xl justify-between gap-6 px-6 py-3">

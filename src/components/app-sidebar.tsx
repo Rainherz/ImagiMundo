@@ -1,7 +1,6 @@
 import * as React from "react";
-import { Plus } from "lucide-react";
+import { Plus, BookOpen, Eye } from "lucide-react";
 
-import { Calendars } from "@/components/calendars";
 import { NavUser } from "@/components/nav-user";
 import {
   Sidebar,
@@ -9,53 +8,45 @@ import {
   SidebarFooter,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
-  SidebarSeparator,
 } from "@/components/ui/sidebar";
-
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-  calendars: [
-    {
-      name: "My Calendars",
-      items: ["Personal", "Work", "Family"],
-    },
-    {
-      name: "Favorites",
-      items: ["Holidays", "Birthdays"],
-    },
-    {
-      name: "Other",
-      items: ["Travel", "Reminders", "Deadlines"],
-    },
-  ],
-};
+import { Button } from "./ui/8bit/button";
+import Image from "next/image";
+import { Card } from "./ui/8bit/card";
+import { Title } from "./ui/title";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar {...props}>
-      <SidebarHeader className="border-sidebar-border h-16 border-b">
-        <NavUser user={data.user} />
-      </SidebarHeader>
-      <SidebarContent>
-        <SidebarSeparator className="mx-0" />
-        <Calendars calendars={data.calendars} />
-      </SidebarContent>
-      <SidebarFooter>
-        <SidebarMenu>
+      <SidebarContent className="flex items-center">
+        <SidebarHeader className="py-6">
+          <Title>ImagiMundo</Title>
+        </SidebarHeader>
+        <SidebarMenu className="h-full pl-4 flex flex-col justify-center gap-6 max-w-(--sidebar-width)">
           <SidebarMenuItem>
-            <SidebarMenuButton>
+            <Button>
+              <BookOpen />
+              <span>Mis Historias</span>
+            </Button>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <Button>
               <Plus />
-              <span>New Calendar</span>
-            </SidebarMenuButton>
+              <span>Nueva Historia</span>
+            </Button>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <Button>
+              <Eye />
+              <span>Universo</span>
+            </Button>
           </SidebarMenuItem>
         </SidebarMenu>
+        <Image src={"/chica.png"} alt={""} width={250} height={600} />
+      </SidebarContent>
+      <SidebarFooter>
+        <NavUser />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
