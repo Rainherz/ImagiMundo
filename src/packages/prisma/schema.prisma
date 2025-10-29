@@ -1,0 +1,228 @@
+generator client {
+  provider = "prisma-client"
+  output   = "./generated"
+  // output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// model Account {
+//   id                 Int       @id @default(autoincrement())
+//   compoundId         String    @unique @map("compound_id")
+//   userId             Int       @map("user_id")
+//   providerType       String    @map("provider_type")
+//   providerId         String    @map("provider_id")
+//   providerAccountId  String    @map("provider_account_id")
+//   refreshToken       String?   @map("refresh_token")
+//   accessToken        String?   @map("access_token")
+//   accessTokenExpires DateTime? @map("access_token_expires")
+//   createdAt          DateTime  @default(now()) @map("created_at")
+//   updatedAt          DateTime  @default(now()) @map("updated_at")
+
+//   @@index([providerAccountId], map: "providerAccountId")
+//   @@index([providerId], map: "providerId")
+//   @@index([userId], map: "userId")
+//   @@map("accounts")
+// }
+
+// model Session {
+//   id           Int      @id @default(autoincrement())
+//   userId       Int      @map("user_id")
+//   expires      DateTime
+//   sessionToken String   @unique @map("session_token")
+//   accessToken  String   @unique @map("access_token")
+//   createdAt    DateTime @default(now()) @map("created_at")
+//   updatedAt    DateTime @default(now()) @map("updated_at")
+
+//   @@map("sessions")
+// }
+
+// model User {
+//   id            String       @id @default(uuid())
+//   name          String?
+//   email         String?   @unique
+//   emailVerified DateTime? @map("email_verified")
+//   image         String?
+//   createdAt     DateTime  @default(now()) @map("created_at")
+//   updatedAt     DateTime  @default(now()) @map("updated_at")
+//   rolesMapper   Int       @default(0)
+
+//   // credentials
+//   credentials   String?
+//   @@map(name: "users")
+//   //@@map("users")
+// }
+
+// model VerificationRequest {
+//   id         Int      @id @default(autoincrement())
+//   identifier String
+//   token      String   @unique
+//   expires    DateTime
+//   createdAt  DateTime @default(now()) @map("created_at")
+//   updatedAt  DateTime @default(now()) @map("updated_at")
+
+//   @@map("verification_requests")
+// }
+
+model User {
+  id            String          @id @default(cuid())
+  name          String?
+  email         String?         @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  // Optional for WebAuthn support
+  Authenticator Authenticator[]
+
+  credentials   String?
+
+ 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+ 
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+ 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+ 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+ 
+  @@unique([provider, providerAccountId])
+}
+ 
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+ 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+ 
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+ 
+  @@unique([identifier, token])
+}
+ 
+// Optional for WebAuthn support
+model Authenticator {
+  credentialID         String  @unique
+  userId               String
+  providerAccountId    String
+  credentialPublicKey  String
+  counter              Int
+  credentialDeviceType String
+  credentialBackedUp   Boolean
+  transports           String?
+ 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+ 
+  @@id([userId, credentialID])
+}
+
+model Superadmin {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @map("user_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+}
+
+model Student {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @map("user_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+}
+
+model Story {
+  id String @id @default(uuid())
+  titulo String
+  synopsis String
+  image String
+  size Int
+  sceneSize Int  
+
+  actors ActorsOnStories[]
+
+  topics Topic[]
+}
+
+// Una historia tiene opciones y escenas, pero no se guardan en DB,
+
+model Topic {
+  id String @id @default(uuid())
+  label String
+  description String
+
+  stories Story[]
+}
+
+model Actor {
+  id          String            @id @default(uuid())
+  name        String
+  description String?
+  stories     ActorsOnStories[]
+}
+
+model ActorsOnStories {
+  actorId    String
+  storyId    String
+  assignedAt DateTime @default(now())
+  story      Story    @relation(fields: [storyId], references: [id])
+  actor      Actor    @relation(fields: [actorId], references: [id])
+
+  @@id([actorId, storyId])
+}
+
+model Terminology {
+  id          String @id @default(uuid())
+  term        String
+  description String
+  example     String
+  createdBy   String
+}
+
+model Scene {
+  id          String   @id @default(uuid())
+  storyId     String
+  sceneNumber Int
+  content     String
+  imageUrl    String?
+  options     String
+  createdAt   DateTime @default(now())
+
+  @@index([storyId])
+}
+
+model WordDefinition {
+  id         String   @id @default(uuid())
+  word       String
+  definition String
+  example    String
+  context    String
+  createdAt  DateTime @default(now())
+
+  @@index([word])
+}

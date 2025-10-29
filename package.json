@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "prisma generate & next dev",
-    "predev": "prisma migrate dev --name update",
+    "dev": "prisma generate --schema ./src/packages/prisma/schema.prisma & next dev",
+    "predev": "prisma migrate dev --name update --schema ./src/packages/prisma/schema.prisma ",
 
     "build": "prisma generate & next build",
     "prebuild": "prisma migrate dev --name update",
