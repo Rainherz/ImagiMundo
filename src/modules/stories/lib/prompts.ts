@@ -176,6 +176,6 @@ Requirements:
 - Include characters and environment from the scene
 - Children's illustration style
 - Warm and engaging atmosphere
-
+- width: 500 pixels, height: 500 pixels
 Generate the image now.`
 }
