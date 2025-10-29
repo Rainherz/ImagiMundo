@@ -15,6 +15,7 @@ import { Button } from "./ui/8bit/button";
 import Image from "next/image";
 import { Card } from "./ui/8bit/card";
 import { Title } from "./ui/title";
+import Link from "next/link";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
@@ -25,21 +26,27 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarHeader>
         <SidebarMenu className="h-full pl-4 flex flex-col justify-center gap-6 max-w-(--sidebar-width)">
           <SidebarMenuItem>
-            <Button>
-              <BookOpen />
-              <span>Mis Historias</span>
+            <Button asChild>
+              <Link href={"/app/"} className="flex gap-2 ">
+                <BookOpen />
+                <span>Mis Historias</span>
+              </Link>
+            </Button>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <Button asChild>
+              <Link href={"/app/new-history"} className="flex gap-2 ">
+                <Plus />
+                <span>Nueva Historia</span>
+              </Link>
             </Button>
           </SidebarMenuItem>
           <SidebarMenuItem>
             <Button>
-              <Plus />
-              <span>Nueva Historia</span>
-            </Button>
-          </SidebarMenuItem>
-          <SidebarMenuItem>
-            <Button>
-              <Eye />
-              <span>Universo</span>
+              <Link href={"/app/universe"} className="flex gap-2 ">
+                <Eye />
+                <span>Universo</span>
+              </Link>
             </Button>
           </SidebarMenuItem>
         </SidebarMenu>

@@ -5,7 +5,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/8bit/button";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -63,11 +63,11 @@ export const Navbar = () => {
         </NavigationMenu>
 
         {/* Auth Buttons */}
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-7">
           <ThemeToggle />
-          <Link href="/login" className="max-lg:hidden">
+          <Link href="/sign-in" className="max-lg:hidden">
             <Button variant="outline">
-              <span className="relative z-10">Login</span>
+              <span className="relative z-10">Iniciar sesión</span>
             </Button>
           </Link>
           {/* Hamburger Menu Button (Mobile Only) */}
