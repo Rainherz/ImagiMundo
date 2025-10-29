@@ -8,7 +8,7 @@ const StoriesServerRouter = {
         const templates = await prisma.template.findMany();
         return templates;
     }),
-    createStory: publicProcedure.input(TemplateModel).mutation(async (opts) => {
+    create: publicProcedure.input(TemplateModel).mutation(async (opts) => {
         const template = await prisma.template.create({
             data: opts.input
         });
